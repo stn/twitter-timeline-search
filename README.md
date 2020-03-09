@@ -37,5 +37,6 @@ flask init-search
 ## Run a server
 
 ```bash
+export FLASK_APP=twitter_timeline_search
 flask run
 ```
