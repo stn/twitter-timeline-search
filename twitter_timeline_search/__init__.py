@@ -9,6 +9,7 @@ def create_app(test_config=None):
     app.config.from_mapping(
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'twitter.sqlite'),
+        SEARCH=os.path.join(app.instance_path, 'twitter.whoosh'),
     )
 
     if test_config is None:
@@ -26,6 +27,9 @@ def create_app(test_config=None):
 
     from . import db
     db.init_app(app)
+
+    #from . import search
+    #search.init_app(app)
 
     from . import auth
     app.register_blueprint(auth.bp)
