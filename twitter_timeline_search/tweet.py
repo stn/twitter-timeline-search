@@ -17,7 +17,7 @@ bp = Blueprint('tweet', __name__)
 @login_required
 def index():
     db = get_db()
-    statuses = db.execute('SELECT * FROM tweet WHERE user_id = ?',
+    statuses = db.execute('SELECT * FROM tweet WHERE user_id = ? ORDER BY created DESC LIMIT 20',
                           (g.user['id'],)).fetchall()
     return render_template('tweet/index.html', statuses=statuses)
 
@@ -36,7 +36,7 @@ def sync():
     writer = ix.writer()
     since_id = get_newest(db)
     newest_id = None
-    for status in tweepy.Cursor(api.home_timeline, since_id=since_id).items(3):
+    for status in tweepy.Cursor(api.home_timeline, since_id=since_id).items(20):
         store_status(db, status, g.user['id'])
         add_tweet(writer, status)
         if newest_id is None:
@@ -57,7 +57,8 @@ def search():
         db = get_db()
         statuses = db.execute('''
             SELECT * FROM tweet
-            WHERE user_id = ? AND id_str IN ({});
+            WHERE user_id = ? AND id_str IN ({})
+            ORDER BY created DESC
             '''.format(','.join(results)), (g.user['id'],)).fetchall()
 
     return render_template('tweet/index.html', statuses=statuses)
