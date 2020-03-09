@@ -29,6 +29,7 @@ TODO: requirements.txt
 ## Initialize DB
 
 ```bash
+export FLASK_APP=twitter_timeline_search
 flask init-db
 flask init-search
 ```
@@ -37,6 +38,5 @@ flask init-search
 ## Run a server
 
 ```bash
-export FLASK_APP=twitter_timeline_search
 flask run
 ```
