@@ -30,6 +30,7 @@ TODO: requirements.txt
 
 ```bash
 flask init-db
+flask init-search
 ```
 
 
