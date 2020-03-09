@@ -81,10 +81,6 @@ def login():
         if error is None:
             session.clear()
             session['user_id'] = user['id']
-            session['twitter_consumer_key'] = user['twitter_consumer_key']
-            session['twitter_consumer_secret'] = user['twitter_consumer_secret']
-            session['twitter_access_token'] = user['twitter_access_token']
-            session['twitter_access_token_secret'] = user['twitter_access_token_secret']
             return redirect(url_for('index'))
 
         flash(error)
@@ -100,7 +96,7 @@ def load_logged_in_user():
         g.user = None
     else:
         g.user = get_db().execute(
-            'SELECT * FROM user WHERE id = ?', (user_id,)
+            'SELECT username, twitter_consumer_key, twitter_consumer_secret, twitter_access_token, twitter_access_token_secret FROM user WHERE id = ?', (user_id,)
         ).fetchone()
 
 
@@ -119,4 +115,3 @@ def login_required(view):
         return view(**kwargs)
 
     return wrapped_view
-
