@@ -9,11 +9,11 @@
 <article class="tweet">
   <header>
     <div>
-      {{ status.user.name }}
+      {{ status.author_name }}
     </div>
   </header>
   <p class="body">{{ status.text }}</p>
-  <p class="body">{{ status }}</p>
+  <p class="body">{{ status.json }}</p>
 </article>
 {% if not loop.last %}
 <hr>

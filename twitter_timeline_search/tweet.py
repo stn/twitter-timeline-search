@@ -15,12 +15,9 @@ bp = Blueprint('tweet', __name__)
 @bp.route('/')
 @login_required
 def index():
-    auth = tweepy.OAuthHandler(g.user['twitter_consumer_key'],
-                               g.user['twitter_consumer_secret'])
-    auth.set_access_token(g.user['twitter_access_token'],
-                          g.user['twitter_access_token_secret'])
-    api = tweepy.API(auth, wait_on_rate_limit=True)
-    statuses = tweepy.Cursor(api.home_timeline).items(10)
+    db = get_db()
+    statuses = db.execute('SELECT * FROM tweet WHERE user_id = ?',
+                          (g.user['id'],)).fetchall()
     return render_template('tweet/index.html', statuses=statuses)
 
 
