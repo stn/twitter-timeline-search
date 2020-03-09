@@ -8,6 +8,8 @@ verify_ssl = true
 [packages]
 flask = "*"
 tweepy = "*"
+whoosh = "*"
+mecab-python3 = "*"
 
 [requires]
 python_version = "3.7"

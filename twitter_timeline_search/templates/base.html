@@ -5,6 +5,10 @@
   <h1>Twitter Timeline Search</h1>
   <ul>
     {% if g.user %}
+    <li>
+      <form action="{{ url_for('tweet.search') }}" method="GET">
+        <input type="text" name="q"  value="" size="20">
+      </form>
     <li><span>{{ g.user['username'] }}</span>
     <li><a href="{{ url_for('tweet.sync') }}">Sync</a>
     <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
@@ -15,9 +19,6 @@
   </ul>
 </nav>
 <section class="content">
-  <header>
-    {% block header %}{% endblock %}
-  </header>
   {% for message in get_flashed_messages() %}
   <div class="flash">{{ message }}</div>
   {% endfor %}
