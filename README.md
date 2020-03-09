@@ -6,7 +6,7 @@ Search your Twitter timeline
 
 A Twitter API tokens is needed for now.
 Please apply them from https://developer.twitter.com/ .
-But maybe 'just want to use this' doesn't work.
+But I'm not sure if 'want to use this' works.
 
 
 ## Install
