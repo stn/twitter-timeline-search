@@ -96,7 +96,7 @@ def load_logged_in_user():
         g.user = None
     else:
         g.user = get_db().execute(
-            'SELECT username, twitter_consumer_key, twitter_consumer_secret, twitter_access_token, twitter_access_token_secret FROM user WHERE id = ?', (user_id,)
+            'SELECT id, username, twitter_consumer_key, twitter_consumer_secret, twitter_access_token, twitter_access_token_secret FROM user WHERE id = ?', (user_id,)
         ).fetchone()
 
 

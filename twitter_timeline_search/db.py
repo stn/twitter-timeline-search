@@ -1,3 +1,4 @@
+import json
 import sqlite3
 
 import click
@@ -41,3 +42,34 @@ def init_db_command():
 def init_app(app):
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
+
+
+def get_newest(db):
+    cur = db.cursor()
+    cur.execute('SELECT id_str FROM newest_tweet WHERE id = 1')
+    result = cur.fetchone()
+    if result:
+        return result[0]
+    return None
+
+
+def store_status(db, status, user_id):
+    cur = db.cursor()
+    cur.execute('''INSERT INTO tweet
+    (id_str, created, author_name, author_screen_name, text, json, user_id)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+    ''',
+                (status.id, status.created_at, status.author.name, status.author.screen_name,
+                 status.text, json.dumps(status._json),
+                 user_id
+                ))
+    db.commit()
+
+
+def update_newest(db, user_id, newest_id):
+    cur = db.cursor()
+    if newest_id:
+        cur.execute(
+            'REPLACE INTO newest_tweet (id, user_id, id_str) values (?, ?, ?)',
+            (1, user_id, newest_id))
+    db.commit()
