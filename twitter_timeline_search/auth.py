@@ -15,6 +15,10 @@ def register():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
+        twitter_consumer_key = request.form['twitter_consumer_key']
+        twitter_consumer_secret = request.form['twitter_consumer_secret']
+        twitter_access_token = request.form['twitter_access_token']
+        twitter_access_token_secret = request.form['twitter_access_token_secret']
         db = get_db()
         error = None
 
@@ -22,16 +26,34 @@ def register():
             error = 'Username is required.'
         elif not password:
             error = 'Password is required.'
+        elif not twitter_consumer_key:
+            error = 'Twitter Consumer Key is required.'
+        elif not twitter_consumer_secret:
+            error = 'Twitter Consumer Secret is required.'
+        elif not twitter_access_token:
+            error = 'Twitter Access Token is required.'
+        elif not twitter_access_token_secret:
+            error = 'Twitter Access Token Secret is required.'
         elif db.execute(
             'SELECT id FROM user WHERE username = ?', (username,)
         ).fetchone() is not None:
             error = 'User {} is already registered.'.format(username)
 
         if error is None:
-            db.execute(
-                'INSERT INTO user (username, password) VALUES (?, ?)',
-                (username, generate_password_hash(password))
-            )
+            db.execute('''INSERT INTO user (
+                username
+                , password
+                , twitter_consumer_key
+                , twitter_consumer_secret
+                , twitter_access_token
+                , twitter_access_token_secret
+                ) VALUES (?, ?, ?, ?, ?, ?)''',
+                       (username,
+                        generate_password_hash(password),
+                        twitter_consumer_key,
+                        twitter_consumer_secret,
+                        twitter_access_token,
+                        twitter_access_token_secret))
             db.commit()
             return redirect(url_for('auth.login'))
 
@@ -59,6 +81,10 @@ def login():
         if error is None:
             session.clear()
             session['user_id'] = user['id']
+            session['twitter_consumer_key'] = user['twitter_consumer_key']
+            session['twitter_consumer_secret'] = user['twitter_consumer_secret']
+            session['twitter_access_token'] = user['twitter_access_token']
+            session['twitter_access_token_secret'] = user['twitter_access_token_secret']
             return redirect(url_for('index'))
 
         flash(error)
