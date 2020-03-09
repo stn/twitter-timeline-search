@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Twitter{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+{% for status in statuses %}
+<article class="tweet">
+  <header>
+    <div>
+      {{ status.user.name }}
+    </div>
+  </header>
+  <p class="body">{{ status.text }}</p>
+  <p class="body">{{ status }}</p>
+</article>
+{% if not loop.last %}
+<hr>
+{% endif %}
+{% endfor %}
+{% endblock %}
