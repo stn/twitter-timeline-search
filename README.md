@@ -8,8 +8,6 @@ A Twitter API tokens is needed for now.
 Please apply them from https://developer.twitter.com/ .
 But maybe 'just want to use this' doesn't work.
 
-how-to (Japanese): https://qiita.com/kngsym2018/items/2524d21455aac111cdee
-
 
 ## Install
 
