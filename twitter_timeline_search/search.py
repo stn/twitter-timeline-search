@@ -1,5 +1,6 @@
 import os
 import shutil
+import unicodedata
 
 import click
 from flask import current_app, g
@@ -8,6 +9,8 @@ from flask.cli import with_appcontext
 from whoosh.index import create_in, open_dir
 from whoosh.fields import Schema, KEYWORD, STORED
 from whoosh.qparser import QueryParser
+
+import MeCab
 
 
 def get_search():
@@ -43,14 +46,20 @@ def init_app(app):
     app.cli.add_command(init_search_command)
 
 
+def tokenize(text):
+    text = unicodedata.normalize('NFKC', text)
+    mecab = MeCab.Tagger('-Owakati')
+    return unicodedata.normalize('NFKC', mecab.parse(text))
+
+
 def add_tweet(writer, status):
-    writer.add_document(text=status.text, id=status.id_str)
+    writer.add_document(text=tokenize(status.text), id=status.id_str)
 
 
 def search_tweets(query, limit=20):
     ix = get_search()
     with ix.searcher() as searcher:
         parser = QueryParser("text", ix.schema)
-        q = parser.parse(query)
+        q = parser.parse(tokenize(query))
         results = searcher.search(q, limit=limit)
         return [r['id'] for r in results]
