@@ -56,12 +56,14 @@ def get_newest(db):
 def store_status(db, status, user_id):
     cur = db.cursor()
     cur.execute('''INSERT INTO tweet
-    (id_str, created, author_name, author_screen_name, text, profile_image, json, user_id)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    (id_str, created, author_name, author_screen_name, text, json, user_id)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
     ''',
-                (status.id, status.created_at, status.author.name, status.author.screen_name,
+                (status.id,
+                 status.created_at,
+                 status.author.name,
+                 status.author.screen_name,
                  status.text,
-                 status.user.profile_image_url_https,
                  json.dumps(status._json),
                  user_id
                 ))

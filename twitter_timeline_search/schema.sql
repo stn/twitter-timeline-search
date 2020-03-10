@@ -20,7 +20,6 @@ CREATE TABLE tweet (
   author_name TEXT NOT NULL,
   author_screen_name TEXT NOT NULL,
   text TEXT NOT NULL,
-  profile_image TEXT,
   json TEXT NOT NULL,
   FOREIGN KEY (user_id) REFERENCES user (id)
 );

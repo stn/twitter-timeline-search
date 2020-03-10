@@ -1,23 +1,23 @@
 html {
-  font-family: sans-serif;
-  background: #eee;
-  padding: 1rem;
+    font-family: Arial, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, メイリオ, Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+    background: white;
+    padding: 0 1rem;
 }
 
 body {
-  max-width: 960px;
+  max-width: 820px;
   margin: 0 auto;
   background: white;
+  border-right: 1px solid lightgray;
+  border-left: 1px solid lightgray;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: serif;
-  color: #377ba8;
   margin: 1rem 0;
 }
 
 a {
-  color: #377ba8;
+  color: #1da1f2;
 }
 
 hr {
@@ -26,10 +26,11 @@ hr {
 }
 
 nav {
-  background: lightgray;
   display: flex;
   align-items: center;
-  padding: 0 0.5rem;
+  padding: 0.5rem;
+  margin: 0;
+  border-bottom: 1px solid lightgray;
 }
 
 nav h1 {
@@ -37,7 +38,7 @@ nav h1 {
   margin: 0;
 }
 
-nav h1 a {
+nav a {
   text-decoration: none;
   padding: 0.25rem 0.5rem;
 }
@@ -55,22 +56,14 @@ nav ul li a, nav ul li span, header .action {
 }
 
 nav input {
-    margin: 0.25rem 0.5rem;
+    display: block;
+    background: #eee;
+    margin: 0.25rem 0.5rem 0 0;
+    padding: 0.25rem;
 }
 
 .content {
-  padding: 0 1rem 1rem;
-}
-
-.content > header {
-  border-bottom: 1px solid lightgray;
-  display: flex;
-  align-items: flex-end;
-}
-
-.content > header h1 {
-  flex: auto;
-  margin: 1rem 0 0.25rem 0;
+    max-width: 598px;
 }
 
 .flash {
@@ -80,59 +73,45 @@ nav input {
   border: 1px solid #377ba8;
 }
 
-.post > header {
-  display: flex;
-  align-items: flex-end;
-  font-size: 0.85em;
+.tweet-box {
+    border-right: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
 }
 
-.post > header > div:first-of-type {
-  flex: auto;
+.tweet {
+    display: flex;
+    padding: 0.5rem;
 }
 
-.post > header h1 {
-  font-size: 1.5em;
-  margin-bottom: 0;
+.tweet .imgbox {
+    margin: 0 5px;
 }
 
-.post .about {
-  color: slategray;
-  font-style: italic;
+.tweet img.profile {
+    border-radius: 50%;
 }
 
-.post .body {
-  white-space: pre-line;
+.tweet-header {
+    font-size: 15px;
+    line-height: 1.3125;
+    margin: 0;
 }
 
-.content:last-child {
-  margin-bottom: 0;
+.tweet-header .user-name {
+    font-weight: bold;
 }
 
-.content form {
-  margin: 1em 0;
-  display: flex;
-  flex-direction: column;
+.tweet-header .user-screen-name {
+    color: #8899a6;
 }
 
-.content label {
-  font-weight: bold;
-  margin-bottom: 0.5em;
+.tweet-header .datetime {
+    color: #8899a6;
 }
 
-.content input, .content textarea {
-  margin-bottom: 1em;
-}
-
-.content textarea {
-  min-height: 12em;
-  resize: vertical;
-}
-
-input.danger {
-  color: #cc2f2e;
-}
-
-input[type=submit] {
-  align-self: start;
-  min-width: 10em;
+.tweet-body {
+    font-size: 15px;
+    line-height: 1.3125;
+    margin: 0;
+    white-space: pre-line;
 }
