@@ -61,4 +61,4 @@ def search():
             ORDER BY created DESC
             '''.format(','.join(results)), (g.user['id'],)).fetchall()
 
-    return render_template('tweet/index.html', statuses=statuses)
+    return render_template('tweet/index.html', statuses=statuses, q=query)
