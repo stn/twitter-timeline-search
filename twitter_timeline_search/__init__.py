@@ -1,6 +1,15 @@
 import os
+from datetime import datetime, timedelta, timezone
 
 from flask import Flask
+
+
+JST = timezone(timedelta(hours=+9), 'JST')
+
+
+def format_datetime(value):
+    # TODO: timezone setting by user
+    return value.replace(tzinfo=timezone.utc).astimezone(JST).strftime('%Y-%m-%d %H:%M:%S')
 
 
 def create_app(test_config=None):
@@ -11,6 +20,8 @@ def create_app(test_config=None):
         DATABASE=os.path.join(app.instance_path, 'twitter.sqlite'),
         SEARCH=os.path.join(app.instance_path, 'twitter.whoosh'),
     )
+
+    app.jinja_env.filters['datetime'] = format_datetime
 
     if test_config is None:
         # load the instance config, if it exists, when not testing

@@ -7,13 +7,15 @@
 {% block content %}
 {% for status in statuses %}
 <article class="tweet">
+  <img src="{{ status.profile_image }}" height="49" width="49">
   <header>
     <div>
       {{ status.author_name }}
+      @{{ status.author_screen_name }} · {{ status.created|datetime }}
     </div>
   </header>
   <p class="body">{{ status.text }}</p>
-  <!-- {{ status.json }} -->
+  {{ status.json }}
 </article>
 {% if not loop.last %}
 <hr>
