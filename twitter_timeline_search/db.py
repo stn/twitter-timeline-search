@@ -59,8 +59,12 @@ def store_status(db, status, user_id):
     (id_str, created, author_name, author_screen_name, text, json, user_id)
     VALUES (?, ?, ?, ?, ?, ?, ?)
     ''',
-                (status.id, status.created_at, status.author.name, status.author.screen_name,
-                 status.text, json.dumps(status._json),
+                (status.id,
+                 status.created_at,
+                 status.author.name,
+                 status.author.screen_name,
+                 status.text,
+                 json.dumps(status._json),
                  user_id
                 ))
     db.commit()

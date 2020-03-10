@@ -1,3 +1,4 @@
+import json
 import os
 import tweepy
 
@@ -13,12 +14,25 @@ from twitter_timeline_search.search import get_search, add_tweet, search_tweets
 
 bp = Blueprint('tweet', __name__)
 
+
+def template_data(row):
+    js = json.loads(row['json'])
+    status = {}
+    status['user_name'] = js['user']['name']
+    status['user_screen_name'] = js['user']['screen_name']
+    status['text'] = js['text']
+    status['created'] = row['created']
+    status['profile_image'] = js['user']['profile_image_url_https'].replace('_normal', '_reasonably_small')
+    return status
+
+
 @bp.route('/')
 @login_required
 def index():
     db = get_db()
-    statuses = db.execute('SELECT * FROM tweet WHERE user_id = ? ORDER BY created DESC LIMIT 20',
+    rows = db.execute('SELECT created, json FROM tweet WHERE user_id = ? ORDER BY created DESC LIMIT 20',
                           (g.user['id'],)).fetchall()
+    statuses = [template_data(row) for row in rows]
     return render_template('tweet/index.html', statuses=statuses)
 
 
@@ -55,10 +69,10 @@ def search():
     if query:
         results = search_tweets(query)
         db = get_db()
-        statuses = db.execute('''
+        rows = db.execute('''
             SELECT * FROM tweet
             WHERE user_id = ? AND id_str IN ({})
             ORDER BY created DESC
             '''.format(','.join(results)), (g.user['id'],)).fetchall()
-
+        statuses = [template_data(row) for row in rows]
     return render_template('tweet/index.html', statuses=statuses, q=query)
