@@ -17,7 +17,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 a {
-  color: #1da1f2;
+    color: black;
+    text-decoration: none;
 }
 
 hr {
@@ -39,8 +40,9 @@ nav h1 {
 }
 
 nav a {
-  text-decoration: none;
-  padding: 0.25rem 0.5rem;
+    color: #1da1f2;
+    text-decoration: none;
+    padding: 0.25rem 0.5rem;
 }
 
 nav ul  {
