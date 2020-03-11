@@ -46,6 +46,7 @@ def create_app(test_config=None):
     app.register_blueprint(auth.bp)
 
     from . import tweet
+    tweet.init_app(app)
     app.register_blueprint(tweet.bp)
     app.add_url_rule('/', endpoint='index')
 
