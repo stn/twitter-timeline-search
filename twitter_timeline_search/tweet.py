@@ -32,7 +32,7 @@ def template_data(row):
 @login_required
 def index():
     db = get_db()
-    rows = db.execute('SELECT created, json FROM tweet WHERE user_id = ? ORDER BY created DESC LIMIT 20',
+    rows = db.execute('SELECT created, json FROM tweet WHERE user_id = ? ORDER BY created DESC LIMIT 200',
                           (g.user['id'],)).fetchall()
     statuses = [template_data(row) for row in rows]
     return render_template('tweet/index.html', statuses=statuses)
@@ -105,6 +105,7 @@ def search():
             SELECT * FROM tweet
             WHERE user_id = ? AND id_str IN ({})
             ORDER BY created DESC
+            LIMIT 200
             '''.format(','.join(results)), (g.user['id'],)).fetchall()
         statuses = [template_data(row) for row in rows]
     return render_template('tweet/index.html', statuses=statuses, q=query)
