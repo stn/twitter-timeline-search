@@ -54,7 +54,6 @@ def process_sync(user_id,
     for status in tweepy.Cursor(api.home_timeline,
                                 since_id=since_id,
                                 count=200).items():
-        print(status.id_str)
         store_status(db, status, user_id)
         add_tweet(writer, status)
         if newest_id is None:
