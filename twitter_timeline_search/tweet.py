@@ -20,6 +20,7 @@ bp = Blueprint('tweet', __name__)
 def template_data(row):
     js = json.loads(row['json'])
     status = {}
+    status['id_str'] = js['id_str']
     status['user_name'] = js['user']['name']
     status['user_screen_name'] = js['user']['screen_name']
     status['text'] = js['text']

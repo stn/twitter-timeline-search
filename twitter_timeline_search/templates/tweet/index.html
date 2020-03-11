@@ -11,14 +11,16 @@
     <div class="imgbox">
       <img class="profile" src="{{ status.profile_image }}" height="49" width="49">
     </div>
-    <div>
-      <div class="tweet-header">
-        <span class="user-name">{{ status['user_name'] }}</span>
-        <span class="user-screen-name">@{{ status['user_screen_name'] }}</span>
-        <span class="datetime"> · {{ status['created']|datetime }}</span>
+    <a href="https://twitter.com/{{ status['user_screen_name'] }}/status/{{ status['id_str'] }}" target="_blank">
+      <div>
+        <div class="tweet-header">
+          <span class="user-name">{{ status['user_name'] }}</span>
+          <span class="user-screen-name">@{{ status['user_screen_name'] }}</span>
+          <span class="datetime"> · {{ status['created']|datetime }}</span>
+        </div>
+        <p class="tweet-body">{{ status['text'] }}</p>
       </div>
-      <p class="tweet-body">{{ status['text'] }}</p>
-    </div>
+    </a>
   </div>
 </article>
 {% endfor %}
